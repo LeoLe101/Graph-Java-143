@@ -42,7 +42,7 @@ public class UnweightedGraph<V> extends AbstractGraph<V> {
         LinkedList<V> col = new LinkedList<>();
         ArrayList<V> vis = new ArrayList<>();
         col.addFirst(v1);
-        while(!col.isEmpty()){
+        while (!col.isEmpty()) {
             V v = col.removeFirst();
             if (!vis.contains(v)) {
                 vis.add(v);
@@ -55,5 +55,25 @@ public class UnweightedGraph<V> extends AbstractGraph<V> {
             }
         }
         return false;
+    }
+
+    public List<V> dfsPath(V v1, V v2) {
+        List<V> vis = new ArrayList<>();
+        dfsPath(v1, vis);
+        int index = vis.indexOf(v2);
+        if (index < 0) {
+            return null;
+        }
+        vis = vis.subList(0, index + 1);
+        return vis;
+    }
+
+    private void dfsPath(V v, List<V> vis) {
+        vis.add(v);
+        for (int i : getNeighbors(getIndex(v))) {
+            if (!vis.contains(getVertex(i))) {
+                dfsPath(getVertex(i), vis);
+            }
+        }
     }
 }
